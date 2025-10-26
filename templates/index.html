@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>House Price Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🏠 House Price Prediction</h1>
+    <p class="subtitle">Enter property details to estimate price</p>
+
+    <form method="POST" action="/">
+      <div class="form-grid">
+        <label>Area (sqft)
+          <input type="number" name="area" step="0.1" required placeholder="e.g. 1200">
+        </label>
+
+        <label>Bedrooms
+          <input type="number" name="bedrooms" required placeholder="e.g. 3">
+        </label>
+
+        <label>Age (years)
+          <input type="number" name="age" required placeholder="e.g. 5">
+        </label>
+
+        <label>Built year (optional)
+          <input type="number" name="built_year" placeholder="e.g. 2015">
+        </label>
+
+        <label>Price per sqft (optional)
+          <input type="number" name="price_per_sqft" step="0.1" placeholder="e.g. 3500">
+        </label>
+
+        <label>Location
+          <input type="text" name="location" placeholder="e.g. Bangalore">
+        </label>
+      </div>
+
+      <button class="btn" type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction is not none %}
+    <div class="result-section">
+      <h2>Predicted House Price</h2>
+      <div class="result-card">
+        <p class="prediction-value">{{ formatted_prediction }}</p>
+      </div>
+
+      <div class="summary">
+        <ul class="summary-list">
+          <li>Area: {{ input_summary.area }} sqft</li>
+          <li>Bedrooms: {{ input_summary.bedrooms }}</li>
+          <li>Age: {{ input_summary.age }} years</li>
+          <li>Price / sqft used: {{ input_summary.price_per_sqft }}</li>
+          <li>Location: {{ input_summary.location }}</li>
+        </ul>
+      </div>
+
+      <a href="/" class="btn link">← Predict Another</a>
+    </div>
+    {% endif %}
+
+    <footer class="footer-note">
+      <small>Model: <code>house_price_model.pkl</code></small>
+    </footer>
+  </div>
+</body>
+</html>
